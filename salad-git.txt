@@ -1,0 +1,7 @@
+echo "# salad" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/bahn28/salad.git
+git push -u origin main

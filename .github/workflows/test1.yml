@@ -1,4 +1,4 @@
-name: Run Notebook a.ipynb
+name: Run Nb az_nyse_001.ipynb
 
 on:
   schedule:

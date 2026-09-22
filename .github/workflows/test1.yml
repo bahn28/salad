@@ -1,4 +1,4 @@
-name: Test Notebook Run
+name: Run Notebook a.ipynb
 
 on:
   schedule:
@@ -9,7 +9,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repo_a
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -20,28 +20,25 @@ jobs:
       - name: Install dependencies
         run: |
           pip install jupyter nbconvert papermill
-          pip install matplotlib yfinance pandas numpy scipy 
-          pip install statsmodels
-          
+          pip install matplotlib yfinance pandas numpy scipy statsmodels
+
       - name: Execute notebook
         run: |
           DATE=$(date +'%Y%m%d')
-          # papermill az_nyse_001.ipynb az_nyse_001_out_${DATE}.ipynb
-          papermill az_nyse_001.ipynb az_nyse_001_out.ipynb
+          mkdir -p test
+          papermill az_nyse_001.ipynb test/a_out_${DATE}.ipynb
 
-      #- name: Upload output
-        #uses: actions/upload-artifact@v4
-        #with:
-        #  name: notebook-output
-        #  path: az_nyse_001_out.ipynb
-
-
-      - name: Commit result
+      - name: Keep only last 5 results
         run: |
+          ls -t test/a_out_*.ipynb | tail -n +6 | xargs -r rm --
+
+      - name: Commit result to repo
+        run: |
+          DATE=$(date +'%Y%m%d')
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add az_nyse_001_out.ipynb
-          git commit -m "Add notebook output"
+          git add test/a_out_${DATE}.ipynb
+          git add -u test
+          git commit -m "Add notebook output ${DATE}" || echo "No changes to commit"
           git push
-
 

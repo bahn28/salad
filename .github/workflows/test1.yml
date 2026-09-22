@@ -28,3 +28,10 @@ jobs:
           DATE=$(date +'%Y%m%d')
           papermill az_nyse_001.ipynb az_nyse_001_out_${DATE}.ipynb
 
+      - name: Upload output
+        uses: actions/upload-artifact@v3
+        with:
+          name: notebook-output
+          path: az_nyse_001_out_${DATE}.ipynb
+
+

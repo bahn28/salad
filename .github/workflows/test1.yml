@@ -5,6 +5,9 @@ on:
     - cron: '0 22 * * *'   # 매일 KST 07:00 실행 (UTC 22:00)
   workflow_dispatch:       # 수동 실행도 가능
 
+permissions:
+  contents: write
+
 jobs:
   run:
     runs-on: ubuntu-latest

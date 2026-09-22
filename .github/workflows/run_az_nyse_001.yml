@@ -2,7 +2,7 @@ name: Run Nb az_nyse_001.ipynb
 
 on:
   schedule:
-    - cron: '0 22 * * *'   # 매일 KST 07:00 실행 (UTC 22:00)
+    - cron: '0 3 * * SAT'   # 
   workflow_dispatch:       # 수동 실행도 가능
 
 permissions:
@@ -28,12 +28,12 @@ jobs:
       - name: Execute notebook
         run: |
           DATE=$(date +'%Y%m%d')
-          mkdir -p test
-          papermill az_nyse_001.ipynb test/a_out_${DATE}.ipynb
+          mkdir -p outputs
+          papermill az_nyse_001.ipynb outputs/a_out_${DATE}.ipynb
 
       - name: Keep only last 5 results
         run: |
-          ls -t test/a_out_*.ipynb | tail -n +6 | xargs -r rm --
+          ls -t outputs/a_out_*.ipynb | tail -n +6 | xargs -r rm --
 
       - name: Commit result to repo
         run: |
@@ -41,7 +41,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add outputs/a_out_${DATE}.ipynb
-          git add -u test
+          git add -u outputs
           git commit -m "Add notebook output ${DATE}" || echo "No changes to commit"
           git push
 

@@ -20,8 +20,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install jupyter nbconvert papermill
-          pip install matplotlib yfinance pandas numpy
-
+          pip install matplotlib yfinance pandas numpy scipy 
+          pip install statsmodels
+          
       - name: Execute notebook
         run: |
           DATE=$(date +'%Y%m%d')

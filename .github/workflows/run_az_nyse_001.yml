@@ -40,7 +40,7 @@ jobs:
           DATE=$(date +'%Y%m%d')
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add test/a_out_${DATE}.ipynb
+          git add outputs/a_out_${DATE}.ipynb
           git add -u test
           git commit -m "Add notebook output ${DATE}" || echo "No changes to commit"
           git push

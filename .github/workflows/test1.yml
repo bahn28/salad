@@ -1,13 +1,9 @@
 name: Test Notebook Run
-#- name: Install dependencies
-run: pip install jupyter nbconvert papermill matplotlib yfinance pandas numpy
 
 on:
   schedule:
-    # 매일 오전 9시 KST 실행 → UTC로는 0시
-    # 오전 7시 - utc 22시 전날... 
-    - cron: '0 22 * * *'
-  workflow_dispatch:   # 수동 실행도 가능
+    - cron: '0 22 * * *'   # 매일 KST 07:00 실행 (UTC 22:00)
+  workflow_dispatch:       # 수동 실행도 가능
 
 jobs:
   run:
@@ -22,7 +18,9 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install jupyter nbconvert papermill
+        run: |
+          pip install jupyter nbconvert papermill
+          pip install matplotlib yfinance pandas numpy
 
       - name: Execute notebook
         run: |

@@ -28,10 +28,12 @@ jobs:
           DATE=$(date +'%Y%m%d')
           papermill az_nyse_001.ipynb az_nyse_001_out_${DATE}.ipynb
 
-      - name: Upload output
-        uses: actions/upload-artifact@v3
-        with:
-          name: notebook-output
-          path: az_nyse_001_out_${DATE}.ipynb
+      - name: Commit result
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add az_nyse_out.ipynb
+          git commit -m "Add notebook output"
+          git push
 
 

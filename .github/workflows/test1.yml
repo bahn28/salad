@@ -1,4 +1,6 @@
 name: Test Notebook Run
+#- name: Install dependencies
+run: pip install jupyter nbconvert papermill matplotlib yfinance pandas numpy
 
 on:
   schedule:
